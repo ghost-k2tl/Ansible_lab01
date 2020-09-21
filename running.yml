@@ -1,0 +1,34 @@
+-----------------------------------------------------------------------------------------------------
+---
+- name: Running Backups...
+  hosts: devices
+  gather_facts: false
+   
+  tasks:
+    - name: IOS...
+      ios_command:
+        commands:
+          - show run
+      register: config
+      when: ansible_network_os == "ios"
+
+    - name: saving...
+      copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "/etc/ansible/backups/backup_ios_{{ inventory_hostname }}.txt"
+      when: ansible_network_os == "ios"
+
+    - name: JUNOS...
+      junos_command:
+        commands:
+          - show configuration
+      register: juconfig
+      when: ansible_network_os == "junos"
+
+    - name: saving...
+      copy:
+        content: "{{ juconfig.stdout[0] }}"
+        dest: "/etc/ansible/backups/backup_junos_{{ inventory_hostname }}.txt"
+      when: ansible_network_os == "junos"
+...
+-----------------------------------------------------------------------------------------------------
