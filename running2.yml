@@ -9,7 +9,7 @@
       commands:
         - show run
     register: config
-    when: ansible_network_os = "ios"
+    when: ansible_network_os == "ios"
   - name: saving...
     copy:
       content: "{{ config.stdout[0] }}"
