@@ -7,9 +7,10 @@
   - name: IOS...
     ios_command:
       commands:
-        - show run
+        - terminal length 0
+        - show running-config
     register: config
-    when: ansible_network_os = "ios"
+    when: ansible_network_os == "ios"
   - name: saving...
     copy:
       content: "{{ config.stdout[0] }}"
@@ -19,7 +20,7 @@
   - name: JUNOS...
     junos_command:
       commands:
-        - show configuration
+        - show configuration | no-more
     register: juconfig
     when: ansible_network_os == "junos"
   - name: saving..
