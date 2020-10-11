@@ -1,0 +1,28 @@
+### Ubuntu ansible server ###
+
+Login user: admin / admin
+sudo su (then add password)
+ifconfig eth1 10.10.10.100/24
+
+#Renew IP via DHCP
+dhclient eth2
+
+#Route default ra internet
+ip route
+
+route add default gw 10.0.137.1
+
+
+#Junos
+set version 14.1R1.10
+set system root-authentication encrypted-password "$1$UXDjTKur$Ikq8wLgZZ9M6Nk0J8oQTN."
+set system login user ansi uid 2001
+set system login user ansi class super-user
+set system login user ansi authentication encrypted-password "$1$OkWxdEs/$jfqi5xoStGr4Hs0HK1Kqd/"
+set system services ssh root-login deny
+set system services ssh hostkey-algorithm ssh-rsa
+set system syslog user * any emergency
+set system syslog file messages any notice
+set system syslog file messages authorization info
+set system syslog file interactive-commands interactive-commands any
+set interfaces em0 unit 0 family inet address 10.10.10.5/24
