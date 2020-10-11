@@ -1,6 +1,6 @@
 ---
 ansible_user: ansi
-ansible_ssh_pass: ios123
+ansible_ssh_pass: ios
 ansible_network_os: ios
 ansible_connection: network_cli
 ...
